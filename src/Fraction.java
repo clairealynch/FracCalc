@@ -17,6 +17,9 @@ public class Fraction {
             String cNumber = frac.substring(frac.indexOf("/") + 1, frac.length()); //should get the denominator value
             int numberC = Integer.parseInt(cNumber);
 
+            if (aNumber.contains("-")) { //at this point, its not changing bnumber to a negative value
+                bNumber = (- + (bNumber)); //might need to delete this part, but need to figure this out
+            }
             numerator = ((numberC * numberA) + numberB); //changes to improper fraction
             denominator = numberC; //the denominator
 
@@ -49,95 +52,77 @@ public class Fraction {
         int numerator2 = frac.getNumerator();
         int denominator2 = frac.getDenominator();
         if (denominator != denominator2) { //find lowest common denominator
-            int newDenom = denominator2 * denominator;
-            //find lcd
-            //multiply numerators by denoms (num/den + num2/den2 to num*den2/den*den2 + num2*den/den*den2)
             int newNum1 = (numerator * denominator2);
             int newNum2 = (numerator2 * denominator);
-            int addedNum = newNum1 + newNum2;
-            String theFrac = (addedNum + "/" + newDenom);
-            return (theFrac); //do I want to return this as an int or String?- still need to simplify
-            // need to return this as a String- not here maybe but somewhere
+            numerator = newNum1 + newNum2;
+            denominator = denominator2 * denominator;
+            return simplify();
         } else {
-            int addedNum = numerator + numerator2;
-            String theFrac = (addedNum + "/" + denominator);
-            return (theFrac); //still need to simplify
+            numerator = numerator + numerator2;
+            return simplify();
         }
     }
     public String subtract(Fraction frac){
         int numerator2= frac.getNumerator();
         int denominator2= frac.getDenominator();
         if (denominator != denominator2) { //find lowest common denominator
-            int newDenom = denominator2 * denominator;
+            denominator = denominator2 * denominator;
             int newNum1 = (numerator * denominator2);
             int newNum2 = (numerator2 * denominator);
-            int subtractedNum = newNum1 - newNum2;
-            String theFrac = (subtractedNum + "/" + newDenom);
-            return (theFrac);
+            numerator = newNum1 - newNum2;
+            return simplify();
         } else {
-            int subtractedNum = numerator - numerator2;
-            String theFrac = (subtractedNum + "/" + denominator);
-            return (theFrac); //still need to simplify
+            numerator = numerator - numerator2;
+            return (simplify());
         }
     }
     public String multiply(Fraction frac){
         int numerator2= frac.getNumerator();
         int denominator2= frac.getDenominator();
-        int newNum = (numerator*numerator2);
-        int newDen = (denominator*denominator2);
-        String theFrac = (newNum + "/" + newDen);
-        return theFrac;
+        numerator = (numerator*numerator2);
+        denominator = (denominator*denominator2);
+        return simplify();
     }
-    public String divide(Fraction frac){ // right now it won't work b/c the fraction has "/", works on whole nums (4/2), not on (2/4) and fracs (1/2)
+    public String divide(Fraction frac){
         int numerator2= frac.getNumerator();
         int denominator2= frac.getDenominator();
-        int newNum = (numerator/numerator2);
-        int newDen = (denominator/denominator2);
-        String theFrac = (newNum + "/" + newDen);
-        return theFrac;
+        numerator = (numerator/numerator2);
+        denominator = (denominator/denominator2);
+        return simplify();
+    }
+    public int gcd(int numerator, int denominator){
+        int a = Math.max(Math.abs(numerator), Math.abs(denominator)); //know which one is larger
+        for (int i = a; i >=1; i--){ //for loop-to find gcd
+            if ((numerator%i == 0) && (denominator%i == 0)){
+                return i;
+            }
+        }
+        return 1;
     }
     public String simplify(){
 
-    }
-        //}
+        //see if numerator and denom have common factor
+        //math it
+        //return num over denom
 
-        //int answer = ; //can't do this bc left and rightSide are in the Main class
-        //return answer;
-       /*
-
-        public int subtract(Fraction frac) {
-
+        int simp = gcd(numerator, denominator);
+        numerator = (numerator/simp);
+        denominator = (denominator/simp);
+        if (denominator == 1){
+            return (numerator + "");
         }
-
-        public int multiply(Fraction frac) {
-
+        if (numerator > denominator){
+            int first = (numerator/denominator);
+            numerator = (numerator%denominator);
+            return (first + "_" + numerator + "/" + denominator);
         }
-
-        public int divide(Fraction frac) {
-
+        else {
+            return (numerator + "/" + denominator);
         }
-
-        public int simplify()
-
-
-
-    /*
-    String equation;//will remove this
-
-    //also need to recognize "-" before a number as a negative value
-    int a = equation.indexOf(" "); //parses the String into int a, the operation, and int b
-    // String operation = equation.indexOf(a + 1); //can only use indexOf for ints?
-    int b = equation.indexOf(a + 2);
-    int operation = equation.indexOf(" " + 1); //shouldn't this be a String?
-
-          /* //need to take mixed numbers and convert to improper fractions (probably use if statements)
-               if (umerator > denominatorn) {
-                   int num1 =          //Already have this above?
-
-               }*/
-
 
     }
+
+}
 
 
 
