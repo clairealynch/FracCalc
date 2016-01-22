@@ -17,9 +17,9 @@ public class Fraction {
             String cNumber = frac.substring(frac.indexOf("/") + 1, frac.length()); //should get the denominator value
             int numberC = Integer.parseInt(cNumber);
 
-            if (aNumber.contains("-")) { //at this point, its not changing bnumber to a negative value
+           /* if (aNumber.contains("-")) { //at this point, its not changing bnumber to a negative value
                 bNumber = (- + (bNumber)); //might need to delete this part, but need to figure this out
-            }
+            }*/
             numerator = ((numberC * numberA) + numberB); //changes to improper fraction
             denominator = numberC; //the denominator
 
